@@ -1,5 +1,5 @@
-/*================== SHOW MENU ==================*/
 'use strict'
+/*================== SHOW MENU ==================*/
 const showMenu = (toggleId, navId) => {
     const toggle = document.getElementById(toggleId),
         nav = document.getElementById(navId);
@@ -73,3 +73,48 @@ function scrollTop(){
 };
 
 window.addEventListener('scroll', scrollTop);
+
+/*================== Dark / Light Theme ==================*/
+const themeBtn = document.getElementById('theme-button');
+const darkTheme = 'dark-theme';
+const iconTheme = 'bx-sun';
+
+// Save previous theme mode
+const selectedTheme = localStorage.getItem('selected-theme');
+const selectedIcon = localStorage.getItem('selected-icon');
+
+const getCurrentTheme = () => document.body.classList.contains(darkTheme)? 'dark' : 'light';
+const getCurrentIcon = () => themeBtn.classList.contains(iconTheme)? 'bx-moon' : 'bx-sun';
+
+if(selectedTheme){
+    document.body.classList[selectedTheme === 'dark' ? 'add' : 'remove'](darkTheme);
+    themeBtn.classList[selectedIcon === 'bx-moon'? 'add' : 'remove'](iconTheme);
+}
+
+// Activate / deactivate the theme manually with the button -> use toggle
+themeBtn.addEventListener('click', (e) => {
+    document.body.classList.toggle(darkTheme);
+    themeBtn.classList.toggle(iconTheme);
+
+    localStorage.setItem('selected-theme', getCurrentTheme());
+    localStorage.setItem('selected-icon', getCurrentIcon());
+});
+
+/*================== Scroll Reveal Animation ==================*/
+const sr = ScrollReveal({
+    origin: 'top',
+    distance: '30px',
+    duration: 2000,
+    reset: true
+});
+
+sr.reveal(`.home__data, .home__img,
+            .about__container,
+            .services__container,
+            .menu__content,
+            .app_data, .app__img,
+            .contact__data, .contact__button,
+            .footer__content`
+            ,{
+    interval: 200
+});
